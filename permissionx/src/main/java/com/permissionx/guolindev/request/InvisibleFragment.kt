@@ -27,6 +27,7 @@ import android.provider.Settings
 import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
+import com.permissionx.guolindev.BuildConfig
 import com.permissionx.guolindev.PermissionX
 import java.util.ArrayList
 
@@ -682,7 +683,13 @@ class InvisibleFragment : Fragment() {
      */
     private fun postForResult(callback: () -> Unit) {
         handler.post {
-            callback()
+            try {
+                callback()
+            } catch (e: Exception) {
+                if (BuildConfig.DEBUG) {
+                    e.printStackTrace()
+                }
+            }
         }
     }
 }
